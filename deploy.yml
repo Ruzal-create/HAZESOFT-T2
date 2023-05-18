@@ -1,0 +1,59 @@
+---
+- name: Deploy TASK 1 To VM
+  hosts: EC2
+  remote_user: ubuntu
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Update package manager cache
+      apt:
+        update_cache: yes
+
+    - name: Install Docker dependencies
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+        state: present
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+
+    - name: Update package manager cache again
+      apt:
+        update_cache: yes
+
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: present
+
+    - name: Clone the repository
+      git:
+        repo: https://github.com/veekrum/task
+        dest: /tmp/task
+
+    - name: Copy Dockerfile to remote instance
+      copy:
+        src: /home/ruzal/ansible/Docker/Dockerfile
+        dest: /home/ubuntu/
+    
+    - name: Copy nginx config file to remote instance
+      copy:
+        src: /home/ruzal/ansible/Docker/nginx.conf
+        dest: /home/ubuntu/
+
+    - name: Build Docker image
+      command: docker build -t my-site /home/ubuntu
+
+    - name: Start Docker container
+      command: docker run -d -p 9000:80 my-site
