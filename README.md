@@ -24,15 +24,31 @@ The playbook consists of several **tasks**
 **Task 10**: Build Docker image
 **Task 11**: Start Docker container
 
+Run asnible playbook by running the following command:
+```sh
+ansible-playbook -i inventory.ini deploy.yml --private-key=<your_keyfile_name>
+```
+_Note: inventory.ini file consists web hosts_
+![Screenshot](image3.jpg)
 
 Now connect to the remote machine through **ssh**
 ```sh
 ssh -i "<your_pem_file>" ubuntu@<ip_address>
 ```
-![Screenshot](image.png)
+![Screenshot](image.jpg)
 
 After successfully connecting to your remote machine run the curl command
 ```
 http://localhost:9000/site/index.html
 ```
-![Screenshot](image2.png)
+![Screenshot](image2.jpg)
+
+
+
+
+
+
+
+
+
+
