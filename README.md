@@ -29,19 +29,19 @@ Run asnible playbook by running the following command:
 ansible-playbook -i inventory.ini deploy.yml --private-key=<your_keyfile_name>
 ```
 _Note: inventory.ini file consists web hosts_
-![Screenshot](image3.jpg)
+![Screenshot](image3.png)
 
 Now connect to the remote machine through **ssh**
 ```sh
 ssh -i "<your_pem_file>" ubuntu@<ip_address>
 ```
-![Screenshot](image.jpg)
+![Screenshot](image.png)
 
 After successfully connecting to your remote machine run the curl command
 ```
 http://localhost:9000/site/index.html
 ```
-![Screenshot](image2.jpg)
+![Screenshot](image2.png)
 
 
 
